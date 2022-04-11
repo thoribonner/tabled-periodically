@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import useQuery from "../utils/useQuery";
 import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
+import { today } from "../utils/date-time";
 
 /**
  * Defines the dashboard page.
@@ -8,20 +10,31 @@ import ErrorAlert from "../layout/ErrorAlert";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date }) {
+function Dashboard() {
+  const query = useQuery();
   const [reservations, setReservations] = useState([]);
-  const [reservationsError, setReservationsError] = useState(null);
+  const [date, setDate] = useState(query.get('date') || today());
+  const [error, setError] = useState(null);
 
   useEffect(loadDashboard, [date]);
 
   function loadDashboard() {
-    const abortController = new AbortController();
-    setReservationsError(null);
-    listReservations({ date }, abortController.signal)
-      .then(setReservations)
-      .catch(setReservationsError);
-    return () => abortController.abort();
+    const ac = new AbortController();
+    setError(null);
+    async function listRes() {
+      try {
+
+        const resList = await listReservations(/* { date } ,*/ ac.signal);
+        setReservations([...resList]);
+      } catch (err) {
+        setError(err);
+      }
+    }
+
+    listRes();
+    return () => ac.abort();
   }
+  console.log(reservations);
 
   return (
     <main>
@@ -29,7 +42,7 @@ function Dashboard({ date }) {
       <div className="d-md-flex mb-3">
         <h4 className="mb-0">Reservations for date</h4>
       </div>
-      <ErrorAlert error={reservationsError} />
+      <ErrorAlert error={error} />
       {JSON.stringify(reservations)}
     </main>
   );
