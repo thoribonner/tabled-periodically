@@ -78,7 +78,6 @@ function dateIsValid(req, res, nxt) {
   if (!reservation_date.match(dateRegEx)) {
     return nxt({
       status: 400,
-      // message: `${reservation_date} is not a valid date.`,
       message: `reservation_date must be a valid date.`,
     });
   }
