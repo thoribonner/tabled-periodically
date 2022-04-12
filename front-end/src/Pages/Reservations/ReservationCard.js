@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function ReservationCard({ reservation }) {
   return (
-    <div className="card border border-warning rounded m-2 col">
+    <div className="card border border-warning rounded my-2 col">
       <div className="card-body">
         <h5 className="card-header">{reservation.first_name} {reservation.last_name}</h5>
         <p className="card-text text-muted">Party of <span className="text-primary">{reservation.people}</span> expected <span className="text-primary">{reservation.reservation_date} {reservation.reservation_time}</span></p>

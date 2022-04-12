@@ -38,15 +38,16 @@
  }
  
  export async function listReservations(params, signal) {
+   const url =new URL(`${API_BASE_URL}/reservations`);
    if (params) {
      Object.entries(params).forEach(([key, value]) =>
-       resUrl.searchParams.append(key, value.toString())
+     url.searchParams.append(key, value.toString())
      );
-     return await fetchJson(resUrl, { headers, signal }, [])
+     return await fetchJson(url, { headers, signal }, [])
        .then(formatReservationDate)
        .then(formatReservationTime);
    } else {
-     return await fetchJson(resUrl, { headers, signal }, []);
+     return await fetchJson(url, { headers, signal }, []);
    }
  }
  

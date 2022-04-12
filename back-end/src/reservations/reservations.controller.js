@@ -125,7 +125,6 @@ async function reservationExists(req, res, nxt) {
   nxt();
 }
 
-
 // * END VALIDATION
 
 // * LIST
@@ -141,8 +140,9 @@ async function list(req, res) {
 
 // * CREATE
 async function create(req, res) {
-  res.status(201).json({ data: await service.create(req.body.data) });
+  res.status(201).json({ data : await service.create(req.body.data) });
 }
+
 // * READ
 function read(req, res) {
   res.json({ data: res.locals.reservation });

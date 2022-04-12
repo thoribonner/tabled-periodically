@@ -38,8 +38,7 @@ export default function ReservationForm({ mode }) {
     const ac = new AbortController();
     try {
       await createReservation(formData, ac.signal);
-      setFormData({ ...initialFormData });
-      history.push('/reservations')
+      history.push(`/dashboard?date=${formData.reservation_date}`)
     } catch (err) {
       setError(err);
     }
