@@ -1,19 +1,10 @@
 import React, { useEffect, useState } from "react";
-import useQuery from "../utils/useQuery";
-import { listReservations } from "../utils/api";
-import ErrorAlert from "../layout/ErrorAlert";
-import { today } from "../utils/date-time";
+import { listReservations } from "../../utils/api";
+import ErrorAlert from "../../layout/ErrorAlert";
+import ReservationsList from "../Reservations/ReservationsList";
 
-/**
- * Defines the dashboard page.
- * @param date
- *  the date for which the user wants to view reservations.
- * @returns {JSX.Element}
- */
-function Dashboard() {
-  const query = useQuery();
+function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
-  const [date, setDate] = useState(query.get('date') || today());
   const [error, setError] = useState(null);
 
   useEffect(loadDashboard, [date]);
@@ -23,8 +14,7 @@ function Dashboard() {
     setError(null);
     async function listRes() {
       try {
-
-        const resList = await listReservations(/* { date } ,*/ ac.signal);
+        const resList = await listReservations({ date }, ac.signal);
         setReservations([...resList]);
       } catch (err) {
         setError(err);
@@ -34,7 +24,6 @@ function Dashboard() {
     listRes();
     return () => ac.abort();
   }
-  console.log(reservations);
 
   return (
     <main>
@@ -43,7 +32,7 @@ function Dashboard() {
         <h4 className="mb-0">Reservations for date</h4>
       </div>
       <ErrorAlert error={error} />
-      {JSON.stringify(reservations)}
+      <ReservationsList reservations={reservations} />
     </main>
   );
 }
