@@ -100,6 +100,7 @@ function dateIsValid(req, res, nxt) {
 
 function peopleIsValid(req, res, nxt) {
   const { people } = req.body.data;
+  console.log(typeof people)
 
   if (!Number.isInteger(people) || people < 1) {
     return nxt({
