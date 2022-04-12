@@ -1,7 +1,6 @@
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const hasProperties = require("../utils/hasProperties");
 const service = require("./reservations.service");
-const hasProperties = require('../utils/hasProperties')
 
 // * BEGIN VALIDATION
 
