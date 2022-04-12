@@ -19,6 +19,7 @@ export default function ReservationForm({ mode }) {
   const history = useHistory();
 
   const handleChange = ({ target }) => {
+    //
     if (target.type === "number") {
       setFormData({
         ...formData,
@@ -36,16 +37,13 @@ export default function ReservationForm({ mode }) {
     e.preventDefault();
     const ac = new AbortController();
     try {
-      createReservation(formData, ac.signal);
+      await createReservation(formData, ac.signal);
       setFormData({ ...initialFormData });
+      history.push('/reservations')
     } catch (err) {
       setError(err);
     }
   }
-
-  /*
-  Error: select * from "reservations" where "reservation_date" = $1 and not "status" = $2 and not "status" = $3 order by "reservation_time" asc - invalid input syntax for type date: "{"2022-04-11","2022-04-11","2022-04-11","2022-04-11","2022-04-11"}"
-  */
 
   return (
     <>
@@ -84,14 +82,14 @@ export default function ReservationForm({ mode }) {
           onChange={handleChange}
           required
         />
-        <label htmlFor="reservation_date">Reservation Date</label>
+        <label htmlFor="reservation_date">Reservation Date <span className="text-muted">(closed Tuesdays)</span></label>
         <input
           type="date"
           className="form-control"
           name="reservation_date"
           id="reservation_date"
           placeholder="YYYY-MM-DD"
-          // pattern="\d{4}-\d{2}-\d{2}"
+          pattern="\d{4}-\d{2}-\d{2}"
           value={formData.reservation_date}
           onChange={handleChange}
           required
@@ -121,7 +119,7 @@ export default function ReservationForm({ mode }) {
           required
         />
         <div>
-          <button className="btn btn-primary">Submit</button>
+          <button className="btn btn-primary" type="submit">Submit</button>
           <button
             className="btn btn-secondary"
             type="button"
