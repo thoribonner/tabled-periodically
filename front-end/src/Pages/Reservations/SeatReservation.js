@@ -7,7 +7,7 @@ import { listTables, readReservation, seatTable } from "../../utils/api";
 export default function SeatReservation() {
   const [reservation, setReservation] = useState({});
   const [tables, setTables] = useState([]);
-  const [select, setSelect] = useState("");
+  const [table_id, setTable_Id] = useState("");
   const [error, setError] = useState(null);
   const { reservation_id } = useParams();
   const history = useHistory();
@@ -40,14 +40,15 @@ export default function SeatReservation() {
   }
 
   const handleChange = ({ target }) => {
-    setSelect(target.value);
+    setTable_Id(target.value);
   };
 
   const handleSubmit = async (e) => {
+    console.log('FRONT END SEAT RESERVATION SUBMIT', 'reservation id', reservation_id, 'table id', table_id)
     e.preventDefault();
     const ac = new AbortController();
     try {
-      await seatTable(reservation_id, select, ac.signal);
+      await seatTable(reservation_id, table_id, ac.signal);
       history.push("/");
     } catch (err) {
       setError(err);
