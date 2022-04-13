@@ -152,9 +152,6 @@ function read(req, res) {
   res.json({ data: res.locals.reservation });
 }
 
-async function seatReservation(req, res) {
-  await service.seatReservation(res.locals.reservation.reservation_id)
-}
 
 module.exports = {
   list: asyncErrorBoundary(list),
@@ -167,9 +164,9 @@ module.exports = {
     asyncErrorBoundary(create),
   ],
   read: [asyncErrorBoundary(reservationExists), read],
-  seatReservation: [
-    asyncErrorBoundary(reservationExists),
-    asyncErrorBoundary(seatReservation)
-  ],
+  // seatReservation: [
+  //   asyncErrorBoundary(reservationExists),
+  //   asyncErrorBoundary(seatReservation)
+  // ],
   reservationExists
 };

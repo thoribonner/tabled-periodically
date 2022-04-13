@@ -24,9 +24,9 @@ function read(reservation_id) {
   return knex(tn).select("*").where({ reservation_id }).first();
 }
 
-function seatReservation(reservation_id) {
-  return knex(tn).where({ reservation_id }).update({ status: "seated" });
-}
+// function updateReservation(reservation_id, status) {
+//   return knex(tn).where({ reservation_id }).update({ status });
+// }
 
 
 module.exports = {
@@ -34,5 +34,5 @@ module.exports = {
   listByDate,
   create,
   read,
-  seatReservation
+  // updateReservation
 };
