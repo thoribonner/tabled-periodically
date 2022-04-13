@@ -17,7 +17,7 @@ function listByDate(reservation_date) {
 function create(reservation) {
   return knex(tn)
     .insert(reservation, "*")
-    .then((createdRes) => createdRes[0]);
+    .then((res) => res[0]);
 }
 function read(reservation_id) {
   return knex(tn).select("*").where({ reservation_id }).first();
