@@ -58,7 +58,6 @@ export default function ReservationForm({ mode }) {
         [target.name]: target.value,
       });
     }
-    console.log(formData)
   };
 
   const handleSubmit = async (e) => {
