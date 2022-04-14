@@ -1,7 +1,6 @@
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const service = require("./tables.service");
 const resService = require("../reservations/reservations.service");
-const resController = require("../reservations/reservations.controller");
 const hasProperties = require("../utils/hasProperties");
 
 // * BEGIN VALIDATION
