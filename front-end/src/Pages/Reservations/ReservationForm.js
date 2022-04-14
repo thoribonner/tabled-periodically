@@ -1,7 +1,12 @@
-import { useState } from "react";
-import { useHistory } from "react-router";
-import { createReservation } from "../../utils/api";
+import { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router";
+import {
+  createReservation,
+  readReservation,
+  updateReservation,
+} from "../../utils/api";
 import ErrorAlert from "../../layout/ErrorAlert";
+import { formatAsDate } from "../../utils/date-time";
 
 export default function ReservationForm({ mode }) {
   const initialFormData = {
@@ -14,8 +19,32 @@ export default function ReservationForm({ mode }) {
   };
   const [formData, setFormData] = useState({ ...initialFormData });
   const [error, setError] = useState(null);
+  const { reservation_id } = useParams();
 
   const history = useHistory();
+
+  useEffect(loadFormData, [reservation_id]);
+
+  function loadFormData() {
+    const ac = new AbortController();
+
+    async function loadReservation() {
+      try {
+        const loadedRes = await readReservation(reservation_id, ac.signal);
+
+        console.log(loadedRes.reservation_date)
+
+        setFormData({
+          ...loadedRes,
+          reservation_date: formatAsDate(loadedRes.reservation_date)
+        });
+      } catch (err) {
+        setError(err);
+      }
+    }
+    if (reservation_id) loadReservation();
+    return () => ac.abort();
+  };
 
   const handleChange = ({ target }) => {
     if (target.type === "number") {
@@ -29,18 +58,23 @@ export default function ReservationForm({ mode }) {
         [target.name]: target.value,
       });
     }
+    console.log(formData)
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const ac = new AbortController();
     try {
-      await createReservation(formData, ac.signal);
+      if (reservation_id) {
+        await updateReservation(formData, ac.signal);
+      } else {
+        await createReservation(formData, ac.signal);
+      }
       history.push(`/dashboard?date=${formData.reservation_date}`);
     } catch (err) {
       setError(err);
     }
-  }
+  };
 
   return (
     <form className="form-group" onSubmit={handleSubmit}>
@@ -120,11 +154,7 @@ export default function ReservationForm({ mode }) {
         <button className="btn btn-primary" type="submit">
           Submit
         </button>
-        <button
-          className="btn btn-dark"
-          type="button"
-          onClick={history.goBack}
-        >
+        <button className="btn btn-dark" type="button" onClick={history.goBack}>
           Cancel
         </button>
       </div>

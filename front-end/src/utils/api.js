@@ -8,8 +8,6 @@ import formatReservationTime from "./format-reservation-date";
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
 
-
-
 const headers = new Headers();
 headers.append("Content-Type", "application/json");
 
@@ -51,11 +49,11 @@ export async function listReservations(params, signal) {
 
 export async function readReservation(reservation_id, signal) {
   const url = new URL(`${API_BASE_URL}/reservations/${reservation_id}`);
-  return  await fetchJson(url, { signal }, {})
+  return await fetchJson(url, { signal }, {});
 }
 
 export async function createReservation(reservation, signal) {
-  console.log('made it to front end create reservation api call')
+  console.log("made it to front end create reservation api call");
   const url = new URL(`${API_BASE_URL}/reservations`);
   const options = {
     method: "POST",
@@ -65,6 +63,19 @@ export async function createReservation(reservation, signal) {
   };
 
   return await fetchJson(url, options);
+}
+
+export async function updateReservation(reservation, signal) {
+  const url = `${API_BASE_URL}/reservations/${reservation.reservation_id}`;
+
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({ data: reservation }),
+    signal,
+  };
+
+  return await fetchJson(url, options, reservation);
 }
 
 export async function cancelReservation(reservationId, signal) {
@@ -103,7 +114,7 @@ export async function seatTable(reservation_id, table_id, signal) {
     headers,
     body: JSON.stringify({
       data: {
-        reservation_id
+        reservation_id,
       },
     }),
     signal,
@@ -111,7 +122,7 @@ export async function seatTable(reservation_id, table_id, signal) {
   return await fetchJson(url, options);
 }
 
-export async function openTable( table_id, signal) {
+export async function openTable(table_id, signal) {
   const url = `${API_BASE_URL}/tables/${table_id}/seat`;
   const options = {
     method: "DELETE",

@@ -59,7 +59,7 @@ function Dashboard() {
       />
       <ErrorAlert error={error} />
       {reservations.length < 1 && <h2>No reservations for this date</h2>};
-      <ReservationsList reservations={reservations} />
+      <ReservationsList reservations={reservations} setError={setError} />
       <TablesList tables={tables} setError={setError} />
     </main>
   );
