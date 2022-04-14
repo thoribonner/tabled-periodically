@@ -31,10 +31,20 @@ function updateStatus(reservation_id, status) {
     .then(() => read(reservation_id));
 }
 
+function searchByPhone(mobile_number) {
+  return knex(tn)
+    .whereRaw(
+      "translate(mobile_number, '() -', '') like ?",
+      `%${mobile_number.replace(/\D/g, "")}%`
+    )
+    .orderBy("reservation_date");
+}
+
 module.exports = {
   list,
   listByDate,
   create,
   read,
   updateStatus,
+  searchByPhone
 };

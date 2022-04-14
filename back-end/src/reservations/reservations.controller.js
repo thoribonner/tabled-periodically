@@ -131,7 +131,7 @@ function statusIsValid(req, res, nxt) {
 
 function statusBooked(req, res, nxt) {
   const { status = "booked" } = req.body.data;
-  
+
   if (status != "booked") {
     return nxt({
       status: 400,
@@ -174,6 +174,8 @@ async function list(req, res) {
 
   if (date) {
     res.json({ data: await service.listByDate(date) });
+  } else if (mobile_number) {
+    res.json({ data: await service.searchByPhone(mobile_number) });
   } else {
     res.json({ data: await service.list() });
   }
@@ -192,8 +194,8 @@ function read(req, res) {
 // * UPDATE STATUS
 async function updateStatus(req, res) {
   const { reservation_id } = res.locals.reservation;
-  const { status } = req.body.data
-  
+  const { status } = req.body.data;
+
   res.json({ data: await service.updateStatus(reservation_id, status) });
 }
 
