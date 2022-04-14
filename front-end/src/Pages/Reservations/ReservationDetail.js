@@ -33,14 +33,14 @@ export default function ReservationDetail({ reservation }) {
         </p>
         <p className="card-text text-muted">
           Reservation status:{" "}
-          <span className="text-primary">{status}</span>
+          <span className="text-primary" data-reservation-id-status={reservation_id}>{status}</span>
         </p>
-        <Link
+        {status === "booked" && <Link
           to={`/reservations/${reservation_id}/seat`}
           className="btn btn-primary"
         >
           Seat
-        </Link>
+        </Link>}
         <Link to="#" className="btn btn-warning">
           Edit
         </Link>

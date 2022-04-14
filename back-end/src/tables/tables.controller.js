@@ -93,6 +93,19 @@ function tableIsOccupied(req, res, nxt) {
   }
   nxt();
 }
+
+function isSeatable(req, res, nxt) {
+  const { status } = res.locals.reservation;
+
+  if (status === "seated") {
+    return nxt({
+      status: 400,
+      message: 'Party has already been seated'
+    })
+  }
+  nxt();
+}
+
 async function reservationExists(req, res, nxt) {
   const { reservation_id } = req.body.data;
 
@@ -167,6 +180,7 @@ module.exports = {
   seatTable: [
     hasOnlyValidProperties,
     asyncErrorBoundary(reservationExists),
+    isSeatable,
     asyncErrorBoundary(tableExists),
     tableIsAvailable,
     capacityIsValid,
