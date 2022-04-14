@@ -199,6 +199,18 @@ async function updateStatus(req, res) {
   res.json({ data: await service.updateStatus(reservation_id, status) });
 }
 
+// * UPDATE
+async function update(req, res) {
+  const { reservation_id } = res.locals.reservation;
+
+  const updatedRes = {
+    ...req.body.data,
+    reservation_id,
+  };
+
+  res.json({ data: await service.update(updatedRes) });
+}
+
 module.exports = {
   list: asyncErrorBoundary(list),
   create: [
@@ -216,5 +228,15 @@ module.exports = {
     statusIsValid,
     statusFinished,
     asyncErrorBoundary(updateStatus),
+  ],
+  update: [
+    asyncErrorBoundary(reservationExists),
+    hasRequiredProperties,
+    hasOnlyValidProperties,
+    timeIsValid,
+    dateIsValid,
+    peopleIsValid,
+    statusFinished,
+    asyncErrorBoundary(update),
   ],
 };
