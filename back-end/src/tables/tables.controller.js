@@ -14,12 +14,12 @@ const hasRequiredProperties = hasProperties(REQUIRED_PROPERTIES);
 function hasOnlyValidProperties(req, res, nxt) {
   const { data } = req.body;
 
-  // if (!data) {
-  //   return nxt({
-  //     status: 400,
-  //     message: 'data required!'
-  //   })
-  // }
+  if (!data) {
+    return nxt({
+      status: 400,
+      message: 'data required!'
+    })
+  }
 
   const invalidFields = Object.keys(data).filter(
     (field) => !VALID_PROPERTIES.includes(field)
