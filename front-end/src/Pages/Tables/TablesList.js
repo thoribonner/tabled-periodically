@@ -2,7 +2,7 @@
 // import { listTables } from "../../utils/api";
 import TableDetail from "./TableDetail";
 
-export default function TablesList({ tables }) {
+export default function TablesList({ tables, setError }) {
   
   return (
     <div className="table-responsive">
@@ -18,7 +18,7 @@ export default function TablesList({ tables }) {
         <tbody>
           {tables.length > 0 &&
             tables.map((table) => (
-              <TableDetail key={table.table_id} table={table} />
+              <TableDetail key={table.table_id} table={table} setError={setError} />
             ))}
         </tbody>
       </table>

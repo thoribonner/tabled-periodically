@@ -60,7 +60,7 @@ function Dashboard() {
       />
       <ErrorAlert error={error} />
       <ReservationsList reservations={reservations} />
-      <TablesList tables={tables} />
+      <TablesList tables={tables} setError={setError} />
     </main>
   );
 }
