@@ -37,7 +37,7 @@ export default function SearchReservations() {
       />
       <ErrorAlert error={error} />
       {reservations.length < 1 && <h1>No reservations found</h1>}
-      <ReservationsList reservations={reservations} />
+      <ReservationsList reservations={reservations} setError={setError} />
     </div>
   );
 }

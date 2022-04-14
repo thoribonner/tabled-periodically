@@ -155,7 +155,6 @@ function statusFinished(req, res, nxt) {
 async function reservationExists(req, res, nxt) {
   const { reservation_id } = req.params;
   const foundRes = await service.read(reservation_id);
-
   if (!foundRes) {
     return nxt({
       status: 404,
