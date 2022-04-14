@@ -249,6 +249,9 @@ describe("US-04 - Seat reservation - E2E", () => {
 
     // eslint-disable-next-line no-template-curly-in-string
     test("seat button has href with /reservations/${reservation_id}/seat", async () => {
+
+      console.log('*****BEGINNING SEAT BUTTON HAS HREF TEST*****');
+      console.log('****TEST RESERVATION', reservation);
       await page.screenshot({
         path: ".screenshots/us-04-dashboard-seat-button-before.png",
         fullPage: true,
@@ -257,7 +260,7 @@ describe("US-04 - Seat reservation - E2E", () => {
       const hrefSelector = `[href="/reservations/${reservation.reservation_id}/seat"]`;
 
       await page.waitForSelector(hrefSelector);
-
+      
       await page.screenshot({
         path: ".screenshots/us-04-dashboard-seat-button-after.png",
         fullPage: true,

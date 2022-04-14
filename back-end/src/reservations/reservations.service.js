@@ -19,13 +19,20 @@ function create(reservation) {
     .insert(reservation, "*")
     .then((res) => res[0]);
 }
+
 function read(reservation_id) {
   return knex(tn).select("*").where({ reservation_id }).first();
 }
+
+// function updateReservation(reservation_id, status) {
+//   return knex(tn).where({ reservation_id }).update({ status });
+// }
+
 
 module.exports = {
   list,
   listByDate,
   create,
   read,
+  // updateReservation
 };

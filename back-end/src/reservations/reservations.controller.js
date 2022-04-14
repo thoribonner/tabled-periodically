@@ -16,6 +16,7 @@ const VALID_PROPERTIES = [
   "created_at",
   "updated_at",
 ];
+
 const REQUIRED_PROPERTIES = [
   "first_name",
   "last_name",
@@ -24,6 +25,8 @@ const REQUIRED_PROPERTIES = [
   "reservation_time",
   "people",
 ];
+
+const VALID_STATUS = ["booked", "seated", "finished", "cancelled"];
 
 const hasRequiredProperties = hasProperties(REQUIRED_PROPERTIES);
 
@@ -41,6 +44,7 @@ function hasOnlyValidProperties(req, res, nxt) {
     });
   nxt();
 }
+
 function timeIsValid(req, res, nxt) {
   const { reservation_time } = req.body.data;
   const timeFormat = /\d\d:\d\d/;
@@ -112,13 +116,13 @@ function peopleIsValid(req, res, nxt) {
 }
 
 async function reservationExists(req, res, nxt) {
-  const { reservationId } = req.params;
-  const foundRes = await service.read(reservationId);
+  const { reservation_id } = req.params;
+  const foundRes = await service.read(reservation_id);
 
   if (!foundRes) {
     return nxt({
       status: 404,
-      message: `Reservation ${reservationId} doesn't exist`,
+      message: `Reservation ${reservation_id} doesn't exist`,
     });
   }
   res.locals.reservation = foundRes;
@@ -140,13 +144,14 @@ async function list(req, res) {
 
 // * CREATE
 async function create(req, res) {
-  res.status(201).json({ data : await service.create(req.body.data) });
+  res.status(201).json({ data: await service.create(req.body.data) });
 }
 
 // * READ
 function read(req, res) {
   res.json({ data: res.locals.reservation });
 }
+
 
 module.exports = {
   list: asyncErrorBoundary(list),
@@ -159,4 +164,9 @@ module.exports = {
     asyncErrorBoundary(create),
   ],
   read: [asyncErrorBoundary(reservationExists), read],
+  // seatReservation: [
+  //   asyncErrorBoundary(reservationExists),
+  //   asyncErrorBoundary(seatReservation)
+  // ],
+  reservationExists
 };
