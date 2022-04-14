@@ -44,7 +44,6 @@ export default function SeatReservation() {
   };
 
   const handleSubmit = async (e) => {
-    console.log('FRONT END SEAT RESERVATION SUBMIT', 'reservation id', reservation_id, 'table id', table_id)
     e.preventDefault();
     const ac = new AbortController();
     try {
