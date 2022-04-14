@@ -29,9 +29,23 @@ function seatTable(reservation_id, table_id) {
     });
 }
 
+function openTable(reservation_id, table_id) {
+  return knex(res)
+    .where({ reservation_id })
+    .update({ status: "finished" })
+    .returning("*")
+    .then(() => {
+      return knex(tn)
+        .where({ table_id })
+        .update({ reservation_id: null })
+        .returning("*");
+    });
+}
+
 module.exports = {
   list,
   read,
   create,
   seatTable,
+  openTable
 };
