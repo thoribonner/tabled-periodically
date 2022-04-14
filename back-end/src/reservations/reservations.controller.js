@@ -130,8 +130,8 @@ function statusIsValid(req, res, nxt) {
 }
 
 function statusBooked(req, res, nxt) {
-  const { status } = req.body.data;
-
+  const { status = "booked" } = req.body.data;
+  
   if (status != "booked") {
     return nxt({
       status: 400,
