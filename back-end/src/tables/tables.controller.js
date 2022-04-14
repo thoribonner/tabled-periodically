@@ -14,12 +14,12 @@ const hasRequiredProperties = hasProperties(REQUIRED_PROPERTIES);
 function hasOnlyValidProperties(req, res, nxt) {
   const { data } = req.body;
 
-  if (!data) {
-    return nxt({
-      status: 400,
-      message: 'data required!'
-    })
-  }
+  // if (!data) {
+  //   return nxt({
+  //     status: 400,
+  //     message: 'data required!'
+  //   })
+  // }
 
   const invalidFields = Object.keys(data).filter(
     (field) => !VALID_PROPERTIES.includes(field)
@@ -82,6 +82,17 @@ function capacityIsValid(req, res, nxt) {
   nxt();
 }
 
+function tableIsOccupied(req, res, nxt) {
+  const { reservation_id } = res.locals.table;
+
+  if (!reservation_id) {
+    return nxt({
+      status: 400,
+      message: 'Table is not occupied'
+    })
+  }
+  nxt();
+}
 async function reservationExists(req, res, nxt) {
   const { reservation_id } = req.body.data;
 
@@ -139,7 +150,9 @@ async function seatTable(req, res) {
 }
 
 async function openTable(req, res) {
-  // TODO
+  const { table_id, reservation_id } = res.locals.table;
+
+  res.json({ data: await service.openTable(reservation_id, table_id) });
 }
 
 module.exports = {
@@ -159,4 +172,9 @@ module.exports = {
     capacityIsValid,
     asyncErrorBoundary(seatTable),
   ],
+  openTable: [
+    asyncErrorBoundary(tableExists),
+    tableIsOccupied,
+    asyncErrorBoundary(openTable)
+  ]
 };
