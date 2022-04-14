@@ -7,7 +7,6 @@ import ReservationsList from "../Reservations/ReservationsList";
 import DateNav from "../../layout/DateNav";
 import dateFormat from "../../utils/dateFormat";
 import TablesList from "../Tables/TablesList";
-// import SeatReservation from "../Reservations/SeatReservation";
 
 function Dashboard() {
   const query = useQuery();
@@ -23,8 +22,8 @@ function Dashboard() {
     setError(null);
     async function loadReservations() {
       try {
-        const resList = await listReservations({ date }, ac.signal);
-        setReservations([...resList]);
+        const loadedReservations = await listReservations({ date }, ac.signal);
+        setReservations([...loadedReservations]);
         setError(null);
       } catch (err) {
         setError(err);
@@ -33,8 +32,8 @@ function Dashboard() {
     async function loadTables() {
       try {
         setError(null);
-        const tabList = await listTables(ac.signal);
-        setTables([...tabList]);
+        const loadedTables = await listTables(ac.signal);
+        setTables([...loadedTables]);
       } catch (err) {
         setError(err);
       }
@@ -59,6 +58,7 @@ function Dashboard() {
         setDate={setDate}
       />
       <ErrorAlert error={error} />
+      {reservations.length < 1 && <h2>No reservations for this date</h2>};
       <ReservationsList reservations={reservations} />
       <TablesList tables={tables} setError={setError} />
     </main>
