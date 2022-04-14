@@ -115,6 +115,43 @@ function peopleIsValid(req, res, nxt) {
   nxt();
 }
 
+function statusIsValid(req, res, nxt) {
+  const { status } = req.body.data;
+
+  if (!VALID_STATUS.includes(status)) {
+    return nxt({
+      status: 400,
+      message: `Status must be either ${VALID_STATUS.join(
+        ", "
+      )}. You put '${status}'`,
+    });
+  }
+  nxt();
+}
+
+function statusBooked(req, res, nxt) {
+  const { status } = req.body.data;
+
+  if (status != "booked") {
+    return nxt({
+      status: 400,
+      message: `A new reservation status must be "booked" - you put ${status}`,
+    });
+  }
+  nxt();
+}
+function statusFinished(req, res, nxt) {
+  const { status } = res.locals.reservation;
+
+  if (status === "finished") {
+    return nxt({
+      status: 400,
+      message: "A finished reservation cannot be updated",
+    });
+  }
+  nxt();
+}
+
 async function reservationExists(req, res, nxt) {
   const { reservation_id } = req.params;
   const foundRes = await service.read(reservation_id);
@@ -152,6 +189,13 @@ function read(req, res) {
   res.json({ data: res.locals.reservation });
 }
 
+// * UPDATE STATUS
+async function updateStatus(req, res) {
+  const { reservation_id } = res.locals.reservation;
+  const { status } = req.body.data
+  
+  res.json({ data: await service.updateStatus(reservation_id, status) });
+}
 
 module.exports = {
   list: asyncErrorBoundary(list),
@@ -161,12 +205,14 @@ module.exports = {
     timeIsValid,
     dateIsValid,
     peopleIsValid,
+    statusBooked,
     asyncErrorBoundary(create),
   ],
   read: [asyncErrorBoundary(reservationExists), read],
-  // seatReservation: [
-  //   asyncErrorBoundary(reservationExists),
-  //   asyncErrorBoundary(seatReservation)
-  // ],
-  reservationExists
+  updateStatus: [
+    asyncErrorBoundary(reservationExists),
+    statusIsValid,
+    statusFinished,
+    asyncErrorBoundary(updateStatus),
+  ],
 };
