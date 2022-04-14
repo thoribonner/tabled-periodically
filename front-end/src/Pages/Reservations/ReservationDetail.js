@@ -1,8 +1,10 @@
+import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import dateFormat from "../../utils/dateFormat";
 import formatTime from "../../utils/timeFormat";
 
 export default function ReservationDetail({ reservation }) {
+  const history = useHistory();
   const {
     reservation_id,
     reservation_date,
@@ -41,10 +43,10 @@ export default function ReservationDetail({ reservation }) {
         >
           Seat
         </a>
-        <Link to="" className="btn btn-warning">
+        <Link to={`/reservations/${reservation_id}/edit`} className="btn btn-warning">
           Edit
         </Link>
-        <Link to="" className="btn btn-dark">
+        <Link to={history.goBack} className="btn btn-dark">
           Cancel
         </Link>
       </div>
