@@ -2,7 +2,7 @@
 // import { listReservations } from "../../utils/api";
 import ReservationDetail from "./ReservationDetail";
 
-export default function ReservationsList({ reservations }) {
+export default function ReservationsList({ reservations, setError }) {
  
   
   return (
@@ -11,6 +11,7 @@ export default function ReservationsList({ reservations }) {
         <ReservationDetail
           key={reservation.reservation_id}
           reservation={reservation}
+          setError={setError}
         />
       ))}
     </div>

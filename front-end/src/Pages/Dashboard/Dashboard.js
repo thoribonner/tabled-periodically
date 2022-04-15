@@ -45,10 +45,16 @@ function Dashboard() {
   }
 
   return (
-    <main>
+    // <main>
+    <>
       <h1>Dashboard</h1>
-      <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for {dateFormat(date)}</h4>
+      {/* <div className="d-md-flex mb-3"> */}
+      <div className="">
+        {/* <h2 className="mb-0"> */}
+        <h2 className="">
+          <i className="fas fa-user-friends accent1"></i> Reservations for{" "}
+          {dateFormat(date)}
+        </h2>
       </div>
       <DateNav
         date={date}
@@ -58,10 +64,11 @@ function Dashboard() {
         setDate={setDate}
       />
       <ErrorAlert error={error} />
-      {reservations.length < 1 && <h2>No reservations for this date</h2>};
+      {reservations.length < 1 && <h2>No reservations for this date</h2>}
       <ReservationsList reservations={reservations} setError={setError} />
       <TablesList tables={tables} setError={setError} />
-    </main>
+    {/* </main> */}
+    </>
   );
 }
 

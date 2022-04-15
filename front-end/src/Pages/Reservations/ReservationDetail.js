@@ -24,10 +24,11 @@ export default function ReservationDetail({ reservation, setError }) {
     );
     if (finish) {
       try {
+        setError(null)
         await cancelReservation(reservation_id, ac.signal);
         history.go();
       } catch (err) {
-        setError(err);
+        setError(err);;
       }
     }
   };
@@ -35,22 +36,22 @@ export default function ReservationDetail({ reservation, setError }) {
   return (
     <div className="card border border-warning rounded my-2 col">
       <div className="card-body">
-        <h5 className="card-header">
+        <h3 className="card-header">
           {first_name} {last_name}
-        </h5>
+        </h3>
         <p className="card-text text-muted">
-          Party of <span className="text-primary">{people}</span> expected{" "}
-          <span className="text-primary">
+          Party of <span className="dark">{people}</span> expected{" "}
+          <span className="dark">
             {dateFormat(reservation_date)} {formatTime(reservation_time)}
           </span>
         </p>
         <p className="card-text text-muted">
-          Contact: <span className="text-primary">{mobile_number}</span>
+          Contact: <span className="dark">{mobile_number}</span>
         </p>
         <p className="card-text text-muted">
           Reservation status:{" "}
           <span
-            className="text-primary"
+            className="dark"
             data-reservation-id-status={reservation_id}
           >
             {status}

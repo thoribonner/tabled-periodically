@@ -1,10 +1,10 @@
-// import { useEffect, useState } from "react";
-// import { listTables } from "../../utils/api";
 import TableDetail from "./TableDetail";
 
 export default function TablesList({ tables, setError }) {
   
   return (
+    <div className="tables">
+<h2><i className="fas fa-utensils accent2"></i> {""} Tables</h2>
     <div className="table-responsive">
       <table className="table no-wrap">
         <thead>
@@ -22,6 +22,7 @@ export default function TablesList({ tables, setError }) {
             ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 }

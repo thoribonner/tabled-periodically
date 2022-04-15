@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import SelectTable from "../Tables/SelectTable";
+import SelectTable from "../../Components/SelectTable";
 import ErrorAlert from "../../layout/ErrorAlert";
 import { listTables, readReservation, seatTable } from "../../utils/api";
 
@@ -63,13 +63,20 @@ export default function SeatReservation() {
         for {reservation.first_name} {reservation.last_name} party of{" "}
         {reservation.people}
       </h3>
-      <form className="form-group" onSubmit={handleSubmit}>
-        <select name="table_id" required onChange={handleChange}>
-          <option value="">Choose Table</option>
-          {tables.map((table) => (
-            <SelectTable key={table.table_id} table={table} />
-          ))}
-        </select>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <select
+            name="table_id"
+            className="form-control"
+            required
+            onChange={handleChange}
+          >
+            <option value="">Choose Table</option>
+            {tables.map((table) => (
+              <SelectTable key={table.table_id} table={table} />
+            ))}
+          </select>
+        </div>
 
         <button type="button" className="btn btn-dark" onClick={history.goBack}>
           Cancel

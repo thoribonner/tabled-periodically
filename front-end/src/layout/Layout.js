@@ -1,27 +1,28 @@
 import React from "react";
 import Menu from "./Menu";
 import Routes from "./Routes";
+import { Link } from "react-router-dom";
+
 
 import "./Layout.css";
 
 /**
  * Defines the main layout of the application.
  *
- * You will not need to make changes to this file.
- *
  * @returns {JSX.Element}
  */
 function Layout() {
   return (
-    <div className="container-fluid">
-      <div className="row h-100">
-        <div className="col-md-2 side-bar">
-          <Menu />
-        </div>
-        <div className="col">
-          <Routes />
-        </div>
-      </div>
+    <div className="body">
+      <header className="dark-bg ">
+        <Link to="/">
+        <h1 className="light logo">Periodic Tables</h1>
+        </Link>
+        <Menu />
+      </header>
+      <main className="light-bg content">
+        <Routes />
+      </main>
     </div>
   );
 }

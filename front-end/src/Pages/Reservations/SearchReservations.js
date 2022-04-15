@@ -29,7 +29,7 @@ export default function SearchReservations() {
 
   return (
     <div>
-      <h1>Search Reaservations</h1>
+      <h1>Search Reservations</h1>
       <SearchForm
         handleSubmit={handleSubmit}
         handleChange={handleChange}

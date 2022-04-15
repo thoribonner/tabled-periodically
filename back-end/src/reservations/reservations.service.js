@@ -2,6 +2,7 @@ const knex = require("../db/connection");
 
 const tn = "reservations";
 
+
 function list() {
   return knex(tn).select("*").orderBy("reservation_time");
 }

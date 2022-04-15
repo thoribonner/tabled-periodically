@@ -1,4 +1,4 @@
-import TableForm from "./TableForm";
+import TableForm from "../../Components/TableForm";
 
 export default function CreateTable() {
   return (

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
-import ErrorAlert from "../../layout/ErrorAlert";
-import { createTable } from "../../utils/api";
+import ErrorAlert from "../layout/ErrorAlert";
+import { createTable } from "../utils/api";
 
 export default function TableForm() {
   const initialFormData = {
@@ -35,7 +35,7 @@ export default function TableForm() {
       await createTable(formData, ac.signal)
       history.push('/')
     } catch (err) {
-      setError(err)
+      setError(err);
     }
   };
 

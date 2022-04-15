@@ -28,6 +28,8 @@ const REQUIRED_PROPERTIES = [
 
 const VALID_STATUS = ["booked", "seated", "finished", "cancelled"];
 
+const ERRORS = []
+
 const hasRequiredProperties = hasProperties(REQUIRED_PROPERTIES);
 
 function hasOnlyValidProperties(req, res, nxt) {
@@ -140,6 +142,7 @@ function statusBooked(req, res, nxt) {
   }
   nxt();
 }
+
 function statusFinished(req, res, nxt) {
   const { status } = res.locals.reservation;
 

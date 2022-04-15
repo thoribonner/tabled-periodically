@@ -1,4 +1,4 @@
-import ReservationForm from "./ReservationForm";
+import ReservationForm from "../../Components/ReservationForm";
 
 export default function CreateReservation() {
   return (

@@ -4,11 +4,11 @@ import {
   createReservation,
   readReservation,
   updateReservation,
-} from "../../utils/api";
-import ErrorAlert from "../../layout/ErrorAlert";
-import { formatAsDate } from "../../utils/date-time";
+} from "../utils/api";
+import ErrorAlert from "../layout/ErrorAlert";
+import { formatAsDate } from "../utils/date-time";
 
-export default function ReservationForm({ mode }) {
+export default function ReservationForm() {
   const initialFormData = {
     first_name: "",
     last_name: "",
@@ -32,11 +32,11 @@ export default function ReservationForm({ mode }) {
       try {
         const loadedRes = await readReservation(reservation_id, ac.signal);
 
-        console.log(loadedRes.reservation_date)
+        console.log(loadedRes.reservation_date);
 
         setFormData({
           ...loadedRes,
-          reservation_date: formatAsDate(loadedRes.reservation_date)
+          reservation_date: formatAsDate(loadedRes.reservation_date),
         });
       } catch (err) {
         setError(err);
@@ -44,10 +44,28 @@ export default function ReservationForm({ mode }) {
     }
     if (reservation_id) loadReservation();
     return () => ac.abort();
+  }
+
+  const formatPhoneNumber = (num) => {
+    if (!num) return num;
+    const mobNum = num.replace(/[^\d]/g, "");
+    const len = mobNum.length;
+
+    if (len < 4) return mobNum;
+    if (len < 7) return `(${mobNum.slice(0, 3)}) ${mobNum.slice(3)}`;
+    return `(${mobNum.slice(0, 3)}) ${mobNum.slice(3, 6)}-${mobNum.slice(
+      6,
+      10
+    )}`;
   };
 
   const handleChange = ({ target }) => {
-    if (target.type === "number") {
+    if (target.type === "tel") {
+      setFormData({
+        ...formData,
+        [target.name]: formatPhoneNumber(target.value),
+      });
+    } else if (target.type === "number") {
       setFormData({
         ...formData,
         [target.name]: Number(target.value),
@@ -61,6 +79,7 @@ export default function ReservationForm({ mode }) {
   };
 
   const handleSubmit = async (e) => {
+    console.log(formData);
     e.preventDefault();
     const ac = new AbortController();
     try {
@@ -102,7 +121,7 @@ export default function ReservationForm({ mode }) {
       />
       <label htmlFor="mobile_number">Mobile Number</label>
       <input
-        type="text"
+        type="tel"
         className="form-control"
         name="mobile_number"
         id="mobile_number"

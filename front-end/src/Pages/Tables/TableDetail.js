@@ -18,6 +18,24 @@ export default function TableDetail({ table, setError }) {
     }
   };
 
+
+  // const status = table.reservation_id ? (
+  //   <td data-table-id-status={table.table_id}>
+  //        Occupied
+  //       {/* <span className="mr-3">Occupied</span> */}
+  //       {/* <button
+  //             type="submit"
+  //             data-table-id-finish={`${table.table_id}`}
+  //             className="btn btn-dark"
+  //             onClick={handleFinish}
+  //           >
+  //             Finish
+  //           </button> */}
+  //   </td>
+  // ) : (
+  //   <td>Free</td>
+  // );
+
   return (
     <tr>
       <td>{table.table_id}</td>

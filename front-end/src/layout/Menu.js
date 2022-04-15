@@ -10,52 +10,34 @@ import { Link } from "react-router-dom";
 
 function Menu() {
   return (
-    <nav className="navbar navbar-dark align-items-start p-0">
-      <div className="container-fluid d-flex flex-column p-0">
-        <Link
-          className="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
-          to="/"
-        >
-          <div className="sidebar-brand-text mx-3">
-            <span>Periodic Tables</span>
-          </div>
-        </Link>
-        <hr className="sidebar-divider my-0" />
-        <ul className="nav navbar-nav text-light" id="accordionSidebar">
-          <li className="nav-item">
-            <Link className="nav-link" to="/dashboard">
-              <span className="oi oi-dashboard" />
-              &nbsp;Dashboard
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/search">
-              <span 
-              className="oi oi-magnifying-glass" />
-              &nbsp;Search
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/reservations/new">
-              <span className="oi oi-plus" />
-              &nbsp;New Reservation
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/tables/new">
-              <span className="oi oi-layers" />
-              &nbsp;New Table
-            </Link>
-          </li>
-        </ul>
-        <div className="text-center d-none d-md-inline">
-          <button
-            className="btn rounded-circle border-0"
-            id="sidebarToggle"
-            type="button"
-          />
-        </div>
-      </div>
+    <nav>
+      <hr />
+      <ul className="top-nav">
+        <li className="top-nav-item">
+          <Link className="" to="/dashboard">
+            <i className="fas fa-tachometer-alt light"></i>
+            <span className="menu-text"> Dashboard</span>
+          </Link>
+        </li>
+        <li className="top-nav-item">
+          <Link className="" to="/search">
+            <i className="fas fa-search light"></i>
+            <span className="menu-text"> Search</span>
+          </Link>
+        </li>
+        <li className="top-nav-item">
+          <Link className="" to="/reservations/new">
+            <i className="fas fa-user-plus accent1"></i>
+            <span className="menu-text"> New Reservation</span>
+          </Link>
+        </li>
+        <li className="top-nav-item">
+          <Link className="" to="/tables/new">
+            <i className="fas fa-utensils accent2"></i>
+            <span className="menu-text"> New Table</span>
+          </Link>
+        </li>
+      </ul>
     </nav>
   );
 }

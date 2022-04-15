@@ -1,0 +1,54 @@
+:root {
+  --clr-dark: #363636;
+  --clr-light: #e5e5e5;
+  --clr-accent1: #f75040;
+  --clr-accent2: #459299;
+}
+#root {
+  width: 100%;
+}
+.body {
+  display: flex;
+  flex-direction: column;
+}
+.dark {
+  color: var(--clr-dark);
+}
+
+.dark-bg {
+  background-color: var(--clr-dark);
+}
+
+.light {
+  color: var(--clr-light);
+}
+
+.light-bg {
+  background-color: var(--clr-light);
+}
+
+.accent1 {
+  color: var(--clr-accent1);
+}
+
+.accent1-bg {
+  background-color: var(--clr-accent1);
+}
+
+.accent2 {
+  color: var(--clr-accent2);
+}
+
+.accent2-bg {
+  background-color: var(--clr-accent2);
+}
+
+@media all and (min-width: 800px) {
+  .body {
+    flex-direction: row;
+  }
+  
+  .content {
+    flex-grow: 1;
+  }
+}
