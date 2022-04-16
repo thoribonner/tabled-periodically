@@ -1,0 +1,94 @@
+.reservations-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.res-card {
+  display: flex;
+  justify-content: space-between;
+  margin: .5rem;
+  font-size: .7rem;
+}
+
+.res-buttons {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 75px;
+  transform: rotate(-90deg);
+}
+
+.seated-buttons {
+transform: rotate(-90deg) translateY(25px)
+}
+
+.res-btn {
+  border-width: 0px;
+  padding: .2rem;
+  height: 25px;
+}
+
+.res-status {
+  height: 25px;
+  text-align: center;
+  width: 75px;
+  padding: .2rem;
+  transform: rotate(-90deg) translate(-25px, -25px);
+}
+.res-card.booked {
+  border: 2px solid var(--clr-accent1);
+}
+
+.res-status.booked {
+  background-color: var(--clr-accent1);
+}
+
+.res-card.seated {
+  border: 2px solid var(--clr-accent2);
+}
+
+.res-status.seated {
+  background-color: var(--clr-accent2);
+}
+
+.res-card.finished {
+  border: 2px solid var(--clr-accent3);
+}
+
+.res-status.finished {
+  background-color: var(--clr-accent3);
+}
+
+.res-details {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  transform: translateX(-40px);
+}
+
+.res-details p,
+.res-details h3 {
+  margin: 0;
+}
+
+.res-details h3 {
+  font-size: 1.2rem;
+}
+
+
+
+.res-btn {
+  width: 100%;
+}
+
+@media all and (min-width: 680px) {
+  .reservations-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .res-card {
+    width: 375px;
+  }
+}

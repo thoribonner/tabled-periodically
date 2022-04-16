@@ -15,12 +15,12 @@ function Layout() {
   return (
     <div className="body">
       <header className="dark-bg ">
-        <Link to="/">
-        <h1 className="light logo">Periodic Tables</h1>
+        <Link to="/" className="light accent3-hover">
+        <h1 className="logo">Periodic Tables</h1>
         </Link>
         <Menu />
       </header>
-      <main className="light-bg content">
+      <main className="content">
         <Routes />
       </main>
     </div>

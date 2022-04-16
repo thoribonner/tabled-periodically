@@ -1,12 +1,10 @@
-// import { useEffect, useState } from "react";
-// import { listReservations } from "../../utils/api";
 import ReservationDetail from "./ReservationDetail";
-
+import './reservations.css'
 export default function ReservationsList({ reservations, setError }) {
  
   
   return (
-    <div className="card-deck d-flex flex-column w-100">
+    <div className="reservations-list">
       {reservations.map((reservation) => (
         <ReservationDetail
           key={reservation.reservation_id}

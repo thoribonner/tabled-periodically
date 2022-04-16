@@ -1,0 +1,26 @@
+.title {
+  text-align: center;
+}
+
+.section-heading {
+  display: flex;
+  flex-direction: column;
+  padding: .7rem;
+}
+
+.sub-title {
+margin: 0;
+}
+
+.reservations-date {
+  margin: 0;
+}
+
+.date-nav {
+  display:flex;
+  justify-content: center;
+}
+
+.date-nav button {
+  margin: 0 0.5rem;
+}
