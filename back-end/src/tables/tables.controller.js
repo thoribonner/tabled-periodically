@@ -235,6 +235,7 @@ function createValidation(req, res, nxt) {
 
 // * LIST
 async function list(req, res) {
+  const tabs = await service.list();
   res.json({ data: await service.list() });
 }
 

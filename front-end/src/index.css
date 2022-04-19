@@ -6,6 +6,7 @@
   --clr-light: hsl(0, 0%, 90%);
   --clr-accent1: hsl(19, 100%, 61%);
   --clr-accent2: hsl(185, 75%, 44%);
+  --clr-accent2-light: hsla(185, 75%, 44%, 0.15);
   --clr-accent3: hsl(56, 54%, 53%);
 }
 
@@ -75,6 +76,10 @@
 
 .accent2-bg {
   background-color: var(--clr-accent2);
+}
+
+.accent2-light-bg {
+  background-color: var(--clr-accent2-light);
 }
 
 .accent3 {

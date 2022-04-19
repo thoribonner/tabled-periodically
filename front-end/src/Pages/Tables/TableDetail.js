@@ -19,8 +19,13 @@ export default function TableDetail({ table, setError }) {
   };
 
   const tableStatus = table.reservation_id ? (
-    <p className="dark tab-status-detail occupied" data-table-id-status={table.table_id}>
-      <span className="tab-status accent1-bg  rounded-top-left-corner">Occupied</span>
+    <p
+      className="dark tab-status-detail occupied"
+      data-table-id-status={table.table_id}
+    >
+      <span className="tab-status accent1-bg  rounded-top-left-corner">
+        Occupied
+      </span>
       <button
         type="submit"
         data-table-id-finish={table.table_id}
@@ -31,19 +36,29 @@ export default function TableDetail({ table, setError }) {
       </button>
     </p>
   ) : (
-    <p className="accent2-bg tab-status-detail rounded-left-corners" data-table-id-status={table.table_id}>
+    <p
+      className="accent2-bg tab-status-detail rounded-left-corners"
+      data-table-id-status={table.table_id}
+    >
       Free
     </p>
   );
 
+  const seated = table.reservation_id ? (
+    <>
+      seated: <span className="font-italic font-weight-bold dark">{table.reservation.last_name}</span>{" "}
+      party of <span className="font-italic font-weight-bold dark">{table.reservation.people}</span>
+    </>
+  ) : (
+    `seats ${table.capacity}`
+  );
+
   return (
-    <div key={table.table_id} className="detail-card tab-card">
+    <div key={table.table_id} className="detail-card tab-card accent2-light-bg">
       {tableStatus}
       <div className="tab-details">
-        <h4 className="tab-name">
-          {table.table_name}
-        </h4>
-        <p>seats {table.capacity}</p>
+        <h4 className="tab-name">{table.table_name}</h4>
+        <p className="medium">{seated}</p>
       </div>
     </div>
   );
