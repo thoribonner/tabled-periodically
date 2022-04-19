@@ -54,7 +54,7 @@ export default function TableDetail({ table, setError }) {
   );
 
   return (
-    <div key={table.table_id} className="detail-card tab-card accent2-light-bg">
+    <div key={table.table_id} className="detail-card tab-card">
       {tableStatus}
       <div className="tab-details">
         <h4 className="tab-name">{table.table_name}</h4>
