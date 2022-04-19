@@ -23,7 +23,7 @@ export default function TableDetail({ table, setError }) {
       <span className="tab-status accent1-bg  rounded-top-left-corner">Occupied</span>
       <button
         type="submit"
-        data-table-id-finish={`${table.table_id}`}
+        data-table-id-finish={table.table_id}
         className="tab-btn light medium-bg rounded-bottom-left-corner"
         onClick={handleFinish}
       >

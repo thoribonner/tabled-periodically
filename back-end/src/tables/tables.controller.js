@@ -32,33 +32,48 @@ function hasOnlyValidProperties(req, res, nxt) {
   nxt();
 }
 
-function nameIsValid(req, res, nxt) {
+/**
+ * If the table_name is not provided or is less than two characters, return an error message.
+ * Otherwise, return false
+ * @param req - the request object
+ * @returns A false boolean value or error message.
+ */
+function nameIsValid(req) {
   const { table_name } = req.body.data;
 
+  // is name provided and atleast 2 characters?
   if (!table_name || table_name.length < 2) {
-    return nxt({
-      status: 400,
-      message: `table_name must be at least two characters.`
-    })
+    return `table_name must be at least two characters.`;
   }
-  nxt();
+  return false;
 }
 
-function capacityisValid(req, res, nxt) {
+/**
+ * If the capacity is not a number or is less than 1, return an error message.
+ * @param req - the request object
+ * @returns A false boolean value or error message.
+ */
+function capacityisValid(req) {
   const { capacity } = req.body.data;
 
+  // is capacity a valid integer greater than 0?
   if (!capacity || !Number.isInteger(capacity)) {
-    return nxt({
-      status: 400,
-      message: `A table must seat at least a capacity of one.`
-    })
+    return `A table must seat at least a capacity of one.`;
   }
-  nxt();
+  return false;
 }
 
+/**
+ * If the table is occupied, return an error
+ * @param req - the request object
+ * @param res - the response object
+ * @param nxt - a function that will be called when the middleware is done.
+ * @returns An error message or the next middleware function.
+ */
 function tableIsAvailable(req, res, nxt) {
   const { reservation_id } = res.locals.table;
 
+  // has the table already been sat?
   if (reservation_id) {
     return nxt({
       status: 400,
@@ -68,10 +83,19 @@ function tableIsAvailable(req, res, nxt) {
   nxt();
 }
 
-function capacityIsValid(req, res, nxt) {
+/**
+ * If the number of people in the reservation is greater than the capacity of the table, return an
+ * error.
+ * @param req - the request object
+ * @param res - the response object
+ * @param nxt - a function that will be called when the middleware is done.
+ * @returns An error message or the next middleware function.
+ */
+function tableCanSeat(req, res, nxt) {
   const { capacity } = res.locals.table;
   const { people } = res.locals.reservation;
 
+  // does the table have the capacity for this party?
   if (people > capacity) {
     return nxt({
       status: 400,
@@ -81,9 +105,17 @@ function capacityIsValid(req, res, nxt) {
   nxt();
 }
 
+/**
+ * If the table is not occupied, return an error
+ * @param req - the request object
+ * @param res - the response object
+ * @param nxt - a function that will be called when the middleware is done.
+ * @returns An error message or the next middleware function.
+ */
 function tableIsOccupied(req, res, nxt) {
   const { reservation_id } = res.locals.table;
 
+  // has the table already been sat?
   if (!reservation_id) {
     return nxt({
       status: 400,
@@ -93,9 +125,17 @@ function tableIsOccupied(req, res, nxt) {
   nxt();
 }
 
+/**
+ * If the reservation has already been seated, then don't let the user seat the reservation
+ * @param req - the request object
+ * @param res - the response object
+ * @param nxt - a function that will be called when the middleware is done.
+ * @returns An error message or the next middleware function.
+ */
 function isSeatable(req, res, nxt) {
   const { status } = res.locals.reservation;
 
+  // is the reservation already been seated?
   if (status === "seated") {
     return nxt({
       status: 400,
@@ -105,9 +145,18 @@ function isSeatable(req, res, nxt) {
   nxt();
 }
 
+/**
+ * If the reservation doesn't exist, send a 404 response with a message saying the reservation doesn't
+ * exist.
+ * @param req - the request object
+ * @param res - the response object
+ * @param nxt - This is a function that will be called when the middleware is done.
+ * @returns An error message or the next middleware function.
+ */
 async function reservationExists(req, res, nxt) {
   const { reservation_id } = req.body.data;
 
+  // is reservation_id provided?
   if (!reservation_id) {
     return nxt({
       status: 400,
@@ -117,6 +166,7 @@ async function reservationExists(req, res, nxt) {
 
   const foundRes = await resService.read(reservation_id);
 
+  // does this reservation exist?
   if (!foundRes) {
     return nxt({
       status: 404,
@@ -127,10 +177,19 @@ async function reservationExists(req, res, nxt) {
   nxt();
 }
 
+/**
+ * If the table doesn't exist, send a 404 response with a message saying the table doesn't
+ * exist.
+ * @param req - the request object
+ * @param res - the response object
+ * @param nxt - This is a function that will be called when the middleware is done.
+ * @returns An error message or the next middleware function.
+ */
 async function tableExists(req, res, nxt) {
   const { table_id } = req.params;
   const foundTab = await service.read(table_id);
 
+  // does the table exist?
   if (!foundTab) {
     return nxt({
       status: 404,
@@ -142,6 +201,36 @@ async function tableExists(req, res, nxt) {
   nxt();
 }
 
+/**
+ * It takes in a request object, and a next function. It then creates an array of
+ * errors. If the array of errors is greater than 0, it returns the next function with a status of 400
+ * and a message of the errors. If the array of errors is less than 0, it returns the next function
+ * @param req - the request object
+ * @param nxt - is a function that is called when the middleware is done.
+ * @returns An array of errors
+ */
+function createValidation(req, res, nxt) {
+  const errors = [];
+
+  // creates an array of errors
+  if (nameIsValid(req)) errors.push(nameIsValid(req));
+  if (capacityisValid(req)) errors.push(capacityisValid(req));
+
+  if (errors.length > 0) {
+    if (errors.length === 1) {
+      return nxt({
+        status: 400,
+        message: errors[0],
+      });
+    } else {
+      return nxt({
+        status: 400,
+        message: errors,
+      });
+    }
+  }
+  nxt();
+}
 // * END VALIDATION
 
 // * LIST
@@ -172,8 +261,7 @@ module.exports = {
   create: [
     hasOnlyValidProperties,
     hasRequiredProperties,
-    nameIsValid,
-    capacityisValid,
+    createValidation,
     asyncErrorBoundary(create),
   ],
   seatTable: [
@@ -182,7 +270,7 @@ module.exports = {
     isSeatable,
     asyncErrorBoundary(tableExists),
     tableIsAvailable,
-    capacityIsValid,
+    tableCanSeat,
     asyncErrorBoundary(seatTable),
   ],
   openTable: [

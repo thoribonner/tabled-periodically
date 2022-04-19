@@ -32,8 +32,6 @@ export default function ReservationForm() {
       try {
         const loadedRes = await readReservation(reservation_id, ac.signal);
 
-        console.log(loadedRes.reservation_date);
-
         setFormData({
           ...loadedRes,
           reservation_date: formatAsDate(loadedRes.reservation_date),
@@ -79,7 +77,6 @@ export default function ReservationForm() {
   };
 
   const handleSubmit = async (e) => {
-    console.log(formData);
     e.preventDefault();
     const ac = new AbortController();
     try {

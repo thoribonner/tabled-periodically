@@ -1,6 +1,6 @@
 function errorHandler(err, req, res, nxt) {
-  const { status = 500, message = "Something went wrong!" } = err;
-  res.status(status).json({ error: message });
+    const { status = 500, message = "Something went wrong!" } = err;
+    res.status(status).json({ error: message });
 }
 
 module.exports = errorHandler;
