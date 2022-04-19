@@ -24,6 +24,7 @@ export default function ReservationDetail({ reservation, setError }) {
     );
     if (finish) {
       try {
+        setError(null);
         await cancelReservation(reservation_id, ac.signal);
         history.go();
       } catch (err) {
@@ -33,51 +34,53 @@ export default function ReservationDetail({ reservation, setError }) {
   };
 
   return (
-    <div className="card border border-warning rounded my-2 col">
-      <div className="card-body">
-        <h5 className="card-header">
+    <div key={reservation_id} className={`detail-card res-card ${status}`}>
+      <p
+        className={`res-status dark ${status} rounded-left-corners-rotated`}
+        data-reservation-id-status={reservation_id}
+      >
+        {status}
+      </p>
+      <div className="res-details">
+        <h4 className="res-name">
           {first_name} {last_name}
-        </h5>
-        <p className="card-text text-muted">
-          Party of <span className="text-primary">{people}</span> expected{" "}
-          <span className="text-primary">
-            {dateFormat(reservation_date)} {formatTime(reservation_time)}
-          </span>
+        </h4>
+        <p className="expecting font-italic medium">
+          <span>expecting</span> <span className="font-weight-bold">party of {people}</span>
         </p>
-        <p className="card-text text-muted">
-          Contact: <span className="text-primary">{mobile_number}</span>
+        <p className="font-weight-bold medium res-date">
+          {dateFormat(reservation_date)} {formatTime(reservation_time)}
         </p>
-        <p className="card-text text-muted">
-          Reservation status:{" "}
-          <span
-            className="text-primary"
-            data-reservation-id-status={reservation_id}
-          >
-            {status}
-          </span>
-        </p>
-        {status === "booked" && (
-          <Link
-            to={`/reservations/${reservation_id}/seat`}
-            className="btn btn-primary"
-          >
-            Seat
-          </Link>
-        )}
-        <Link
-          to={`/reservations/${reservation_id}/edit`}
-          className="btn btn-warning"
-        >
-          Edit
-        </Link>
-        <button
-          onClick={handleCancel}
-          data-reservation-id-cancel={reservation_id}
-          className="btn btn-dark"
-        >
-          Cancel
-        </button>
+        <p className="medium">contact: {mobile_number}</p>
       </div>
+      {status !== "finished" && status !== "cancelled" && (
+        <div className={`res-buttons rotate ${status}-buttons`}>
+          {status === "booked" && (
+            <Link
+              to={`/reservations/${reservation_id}/seat`}
+              className="res-btn medium-bg light accent2-hover"
+            >
+              Seat
+            </Link>
+          )}
+          <Link
+            to={`/reservations/${reservation_id}/edit`}
+            className="res-btn med-dark-bg light accent1-hover"
+          >
+            Edit
+          </Link>
+
+          <button
+            onClick={handleCancel}
+            data-reservation-id-cancel={reservation_id}
+            className="res-btn light dark-bg accent3-hover rounded-right-corners-rotated"
+          >
+            Cancel
+          </button>
+        </div>
+      )}
     </div>
   );
 }
+
+// TODO try to reduce classNames between tables and reservations

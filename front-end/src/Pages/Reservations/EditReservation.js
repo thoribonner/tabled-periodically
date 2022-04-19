@@ -1,9 +1,9 @@
-import ReservationForm from "./ReservationForm";
+import ReservationForm from "../../Components/ReservationForm";
 
 export default function EditReservation() {
   return (
     <>
-      <h1>Edit Reservation</h1>
+      <h1 className="text-center">Edit Reservation</h1>
       <ReservationForm />
     </>
   );

@@ -53,7 +53,6 @@ export async function readReservation(reservation_id, signal) {
 }
 
 export async function createReservation(reservation, signal) {
-  console.log("made it to front end create reservation api call");
   const url = new URL(`${API_BASE_URL}/reservations`);
   const options = {
     method: "POST",

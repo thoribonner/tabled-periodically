@@ -10,7 +10,7 @@ export default function TableDetail({ table, setError }) {
     );
     if (finish) {
       try {
-        await openTable(table.table_id)
+        await openTable(table.table_id);
         history.go();
       } catch (err) {
         setError(err);
@@ -18,28 +18,33 @@ export default function TableDetail({ table, setError }) {
     }
   };
 
+  const tableStatus = table.reservation_id ? (
+    <p className="dark tab-status-detail occupied" data-table-id-status={table.table_id}>
+      <span className="tab-status accent1-bg  rounded-top-left-corner">Occupied</span>
+      <button
+        type="submit"
+        data-table-id-finish={`${table.table_id}`}
+        className="tab-btn light medium-bg rounded-bottom-left-corner"
+        onClick={handleFinish}
+      >
+        Finish
+      </button>
+    </p>
+  ) : (
+    <p className="accent2-bg tab-status-detail rounded-left-corners" data-table-id-status={table.table_id}>
+      Free
+    </p>
+  );
+
   return (
-    <tr>
-      <td>{table.table_id}</td>
-      <td>{table.table_name}</td>
-      <td>{table.capacity}</td>
-      <td data-table-id-status={table.table_id}>
-        {table.reservation_id ? (
-          <div className="">
-            <span className="mr-3">Occupied</span>
-            <button
-              type="submit"
-              data-table-id-finish={`${table.table_id}`}
-              className="btn btn-dark"
-              onClick={handleFinish}
-            >
-              Finish
-            </button>
-          </div>
-        ) : (
-          "Free"
-        )}
-      </td>
-    </tr>
+    <div key={table.table_id} className="detail-card tab-card">
+      {tableStatus}
+      <div className="tab-details">
+        <h4 className="tab-name">
+          {table.table_name}
+        </h4>
+        <p>seats {table.capacity}</p>
+      </div>
+    </div>
   );
 }

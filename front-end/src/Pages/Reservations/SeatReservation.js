@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import SelectTable from "../Tables/SelectTable";
+import SelectTable from "../../Components/SelectTable";
 import ErrorAlert from "../../layout/ErrorAlert";
 import { listTables, readReservation, seatTable } from "../../utils/api";
 
@@ -58,25 +58,41 @@ export default function SeatReservation() {
   return (
     <>
       <ErrorAlert error={error} />
-      <h2>Seat Reservation</h2>
-      <h3>
-        for {reservation.first_name} {reservation.last_name} party of{" "}
-        {reservation.people}
-      </h3>
-      <form className="form-group" onSubmit={handleSubmit}>
-        <select name="table_id" required onChange={handleChange}>
-          <option value="">Choose Table</option>
-          {tables.map((table) => (
-            <SelectTable key={table.table_id} table={table} />
-          ))}
-        </select>
-
-        <button type="button" className="btn btn-dark" onClick={history.goBack}>
-          Cancel
-        </button>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
+      <h1 className="text-center">Seating:</h1>
+      <h2 className="text-center">
+        <span className="accent1">
+          {reservation.first_name} {reservation.last_name}{" "}
+        </span>
+        <span className="font-italic medium">party of</span>{" "}
+        <span className="accent1">{reservation.people}</span>
+      </h2>
+      <form onSubmit={handleSubmit}>
+        <div className="seat-form-buffer">
+          <select
+            name="table_id"
+            className="form-control"
+            required
+            onChange={handleChange}
+            autoFocus
+          >
+            <option value="">Choose Table</option>
+            {tables.map((table) => (
+              <SelectTable key={table.table_id} table={table} />
+            ))}
+          </select>
+        </div>
+        <div>
+          <button
+            type="button"
+            className="form-btn dark-bg light"
+            onClick={history.goBack}
+          >
+            Cancel
+          </button>
+          <button type="submit" className="form-btn accent2-bg">
+            Submit
+          </button>
+        </div>
       </form>
     </>
   );
