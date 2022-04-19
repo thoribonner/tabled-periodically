@@ -4,21 +4,21 @@ export default function SearchForm({
   mobile_number,
 }) {
   return (
-    <form onSubmit={handleSubmit} className="form-inline">
-      <div className="form-group ">
-        <input
-          type="text"
-          name="mobile_number"
-          value={mobile_number}
-          onChange={handleChange}
-          placeholder="123-456-7890"
-          required
-        />
-      </div>
-      <div className="form-group mx-3">
-        <button type="submit" className="btn btn-dark">
-          Find
-        </button>
+    <form onSubmit={handleSubmit} className="search-form">
+      <div className="form-item">
+          <input
+            type="text"
+            name="mobile_number"
+            className="search inp"
+            value={mobile_number}
+            onChange={handleChange}
+            placeholder="Search by phone.."
+            autoFocus
+            required
+          />
+          <button type="submit" className="form-btn accent1-bg">
+            Find
+          </button>
       </div>
     </form>
   );

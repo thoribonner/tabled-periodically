@@ -18,9 +18,12 @@ export default function SearchReservations() {
     const ac = new AbortController();
     setError(null);
     try {
-      const loadedReservations = await listReservations({ mobile_number }, ac.signal);
+      const loadedReservations = await listReservations(
+        { mobile_number },
+        ac.signal
+      );
       setReservations([...loadedReservations]);
-      setMobile_number('');
+      setMobile_number("");
     } catch (err) {
       setError(err);
     }
@@ -28,7 +31,7 @@ export default function SearchReservations() {
   };
 
   return (
-    <div>
+    <>
       <h1>Search Reservations</h1>
       <SearchForm
         handleSubmit={handleSubmit}
@@ -36,8 +39,10 @@ export default function SearchReservations() {
         mobile_number={mobile_number}
       />
       <ErrorAlert error={error} />
-      {reservations.length < 1 && <h1>No reservations found</h1>}
-      <ReservationsList reservations={reservations} setError={setError} />
-    </div>
+      {reservations.length < 1 && <h2>No reservations found</h2>}
+      <div className="search-res-list">
+        <ReservationsList reservations={reservations} setError={setError} />
+      </div>
+    </>
   );
 }

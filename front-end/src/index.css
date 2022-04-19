@@ -95,6 +95,24 @@
   text-decoration: none;
 }
 
+.rounded-left-corners-rotated {
+  border-radius: .3rem .3rem 0 0;
+}
+
+.rounded-left-corners {
+  border-radius: .36rem 0.36rem 0 .3rem;
+}
+
+.rounded-right-corners-rotated {
+  border-radius: 0 0 .36rem .36rem;
+}
+.rounded-top-left-corner {
+  border-radius: .36rem 0 0 0;
+}
+.rounded-bottom-left-corner {
+  border-radius: 0 0 0 .36rem;
+}
+
 @media all and (min-width: 800px) {
   .body {
     flex-direction: row;

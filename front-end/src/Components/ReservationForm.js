@@ -95,87 +95,115 @@ export default function ReservationForm() {
   };
 
   return (
-    <form className="form-group" onSubmit={handleSubmit}>
+    <>
       <ErrorAlert error={error} />
-      <label htmlFor="first_name">First Name</label>
-      <input
-        type="text"
-        className="form-control"
-        name="first_name"
-        id="first_name"
-        placeholder="First Name"
-        value={formData.first_name}
-        onChange={handleChange}
-        required
-      />
-      <label htmlFor="last_name">Last Name</label>
-      <input
-        type="text"
-        className="form-control"
-        name="last_name"
-        id="last_name"
-        placeholder="last Name"
-        value={formData.last_name}
-        onChange={handleChange}
-        required
-      />
-      <label htmlFor="mobile_number">Mobile Number</label>
-      <input
-        type="tel"
-        className="form-control"
-        name="mobile_number"
-        id="mobile_number"
-        placeholder="123-456-7890"
-        value={formData.mobile_number}
-        onChange={handleChange}
-        required
-      />
-      <label htmlFor="reservation_date">
-        Reservation Date <span className="text-muted">(closed Tuesdays)</span>
-      </label>
-      <input
-        type="date"
-        className="form-control"
-        name="reservation_date"
-        id="reservation_date"
-        placeholder="YYYY-MM-DD"
-        pattern="\d{4}-\d{2}-\d{2}"
-        value={formData.reservation_date}
-        onChange={handleChange}
-        required
-      />
-      <label htmlFor="reservation_time">Reservation Time</label>
-      <input
-        type="time"
-        className="form-control"
-        name="reservation_time"
-        id="reservation_time"
-        placeholder="HH:MM"
-        pattern="[0-9]{2}:[0-9]{2}"
-        value={formData.reservation_time}
-        onChange={handleChange}
-        required
-      />
-      <label htmlFor="people">Party Size</label>
-      <input
-        type="number"
-        className="form-control"
-        name="people"
-        id="people"
-        placeholder="1"
-        min="1"
-        value={formData.people}
-        onChange={handleChange}
-        required
-      />
-      <div>
-        <button className="btn btn-primary" type="submit">
-          Submit
-        </button>
-        <button className="btn btn-dark" type="button" onClick={history.goBack}>
-          Cancel
-        </button>
-      </div>
-    </form>
+      <form onSubmit={handleSubmit}>
+        <div className="form-inputs">
+          <div className="form-item">
+            <input
+              type="tel"
+              className="res-inp"
+              name="mobile_number"
+              id="mobile_number"
+              placeholder=" "
+              value={formData.mobile_number}
+              onChange={handleChange}
+              autoFocus
+              required
+            />
+            <label className="form-label" htmlFor="mobile_number">
+              Mobile Number
+            </label>
+          </div>
+          <div className="form-item">
+            <input
+              type="text"
+              className="res-inp"
+              name="first_name"
+              id="first_name"
+              placeholder=" "
+              value={formData.first_name}
+              onChange={handleChange}
+              required
+            />
+            <label className="form-label" htmlFor="first_name">
+              First Name
+            </label>
+          </div>
+          <div className="form-item">
+            <input
+              type="text"
+              className="res-inp"
+              name="last_name"
+              id="last_name"
+              placeholder=" "
+              value={formData.last_name}
+              onChange={handleChange}
+              required
+            />
+            <label className="form-label" htmlFor="last_name">
+              Last Name
+            </label>
+          </div>
+          <div className="form-item">
+            <input
+              type="number"
+              className="res-inp"
+              name="people"
+              id="people"
+              placeholder=" "
+              min="1"
+              value={formData.people}
+              onChange={handleChange}
+              required
+            />
+            <label className="form-label" htmlFor="people">
+              Party Size
+            </label>
+          </div>
+          <div className="form-item-dt date">
+            <label className="form-label-dt" htmlFor="reservation_date">
+              Reservation Date{" "}
+              <span className="text-muted">(closed Tuesdays)</span>
+            </label>
+            <input
+              type="date"
+              className="inp"
+              name="reservation_date"
+              id="reservation_date"
+              value={formData.reservation_date}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-item-dt time">
+            <label className="form-label-dt" htmlFor="reservation_time">
+              Reservation Time
+            </label>
+            <input
+              type="time"
+              className="inp"
+              name="reservation_time"
+              id="reservation_time"
+              value={formData.reservation_time}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+        <div>
+          <button
+            className="form-btn dark-bg light"
+            type="button"
+            onClick={history.goBack}
+          >
+            Cancel
+          </button>
+          <button className="form-btn accent1-bg" type="submit">
+            Submit
+          </button>
+        </div>
+      </form>
+    </>
   );
 }

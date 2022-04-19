@@ -49,24 +49,44 @@ function Dashboard() {
     <>
       <h1 className="title">Dashboard</h1>
       <ErrorAlert error={error} />
-      <div id="reservations" className="reservations">
-        <div className="section-heading">
-          <h2 className="sub-title">
-            <i className="fas fa-user-friends accent1"></i> Reservations
-          </h2>
-          <p className="reservations-date">for {dateFormat(date)}</p>
-        </div>
-        <DateNav
-          date={date}
-          next={next}
-          today={today}
-          prev={previous}
-          setDate={setDate}
-        />
-        {reservations.length < 1 && <h2>No reservations for this date</h2>}
-        <ReservationsList reservations={reservations} setError={setError} />
+      <div className="dashboard-content">
+        <section id="reservations">
+          <div className="section-heading">
+            <h2 className="sub-title">
+              <i className="fas fa-user-friends accent1"></i> Reservations
+            </h2>
+            <p className="reservations-date">for {dateFormat(date)}</p>
+          </div>
+
+          <DateNav
+            date={date}
+            next={next}
+            today={today}
+            prev={previous}
+            setDate={setDate}
+          />
+
+          {reservations.length < 1 && <h3>No reservations for this date</h3>}
+
+          <ReservationsList
+            reservations={reservations}
+            setError={setError}
+            date={date}
+            next={next}
+            today={today}
+            prev={previous}
+            setDate={setDate}
+          />
+        </section>
+        <section id="tables">
+          <div className="section-heading">
+            <h2 className="sub-title">
+              <i className="fas fa-utensils accent2"></i> {""} Tables
+            </h2>
+          </div>
+          <TablesList tables={tables} setError={setError} />
+        </section>
       </div>
-      <TablesList tables={tables} setError={setError} />
     </>
   );
 }

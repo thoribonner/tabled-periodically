@@ -34,26 +34,26 @@ export default function ReservationDetail({ reservation, setError }) {
   };
 
   return (
-    <div className={`res-card ${status}`}>
+    <div key={reservation_id} className={`detail-card res-card ${status}`}>
       <p
-        className={`res-status dark ${status}`}
+        className={`res-status dark ${status} rounded-left-corners-rotated`}
         data-reservation-id-status={reservation_id}
       >
         {status}
       </p>
       <div className="res-details">
-        <p className="expecting">
-          <span>expecting</span> <span>party of {people}</span>
-        </p>
-        <h3 className="res-name">
+        <h4 className="res-name">
           {first_name} {last_name}
-        </h3>
-        <p>
+        </h4>
+        <p className="expecting font-italic medium">
+          <span>expecting</span> <span className="font-weight-bold">party of {people}</span>
+        </p>
+        <p className="font-weight-bold medium res-date">
           {dateFormat(reservation_date)} {formatTime(reservation_time)}
         </p>
-        <p>contact: {mobile_number}</p>
+        <p className="medium">contact: {mobile_number}</p>
       </div>
-      {status !== "finished" && (
+      {status !== "finished" && status !== "cancelled" && (
         <div className={`res-buttons rotate ${status}-buttons`}>
           {status === "booked" && (
             <Link
@@ -73,7 +73,7 @@ export default function ReservationDetail({ reservation, setError }) {
           <button
             onClick={handleCancel}
             data-reservation-id-cancel={reservation_id}
-            className="res-btn light dark-bg accent3-hover"
+            className="res-btn light dark-bg accent3-hover rounded-right-corners-rotated"
           >
             Cancel
           </button>
@@ -83,41 +83,4 @@ export default function ReservationDetail({ reservation, setError }) {
   );
 }
 
-{
-  /* <p className="card-text text-muted">
-        Party of <span className="dark">{people}</span> expected{" "}
-        <span className="dark">
-          {dateFormat(reservation_date)} {formatTime(reservation_time)}
-        </span>
-      </p>
-      <p className="card-text text-muted">
-        Contact: <span className="dark">{mobile_number}</span>
-      </p>
-      <p className="card-text text-muted">
-        Reservation status:{" "}
-        <span className="dark" data-reservation-id-status={reservation_id}>
-          {status}
-        </span>
-      </p>
-      {status === "booked" && (
-        <Link
-          to={`/reservations/${reservation_id}/seat`}
-          className="btn btn-primary"
-        >
-          Seat
-        </Link>
-      )}
-      <Link
-        to={`/reservations/${reservation_id}/edit`}
-        className="btn btn-warning"
-      >
-        Edit
-      </Link>
-      <button
-        onClick={handleCancel}
-        data-reservation-id-cancel={reservation_id}
-        className="btn btn-dark"
-      >
-        Cancel
-      </button> */
-}
+// TODO try to reduce classNames between tables and reservations

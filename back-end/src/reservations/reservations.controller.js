@@ -28,12 +28,10 @@ const REQUIRED_PROPERTIES = [
 
 const VALID_STATUS = ["booked", "seated", "finished", "cancelled"];
 
-const ERRORS = []
-
 const hasRequiredProperties = hasProperties(REQUIRED_PROPERTIES);
 
 function hasOnlyValidProperties(req, res, nxt) {
-  const { data } = req.body;
+  const { data ={} } = req.body;
 
   const invalidFields = Object.keys(data).filter(
     (field) => !VALID_PROPERTIES.includes(field)
