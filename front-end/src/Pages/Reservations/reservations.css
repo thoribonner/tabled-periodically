@@ -228,3 +228,23 @@ form {
 .search-res-list .list .res-card {
   min-width: 300px;
 }
+
+.seat-form-buffer {
+  width: 100%;
+  padding: 0 5rem;
+}
+
+select {
+  margin: auto;
+  max-width: 600px;
+  padding: .5rem;
+}
+
+select:hover, select:focus {
+  border: 4px solid var(--clr-accent2);
+}
+
+option:hover {
+  background-color: var(--clr-accent2);
+}
+

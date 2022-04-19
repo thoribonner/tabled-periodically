@@ -100,7 +100,7 @@
 }
 
 .rounded-left-corners {
-  border-radius: .36rem 0.36rem 0 .3rem;
+  border-radius: .36rem 0 0 .36rem;
 }
 
 .rounded-right-corners-rotated {

@@ -58,18 +58,22 @@ export default function SeatReservation() {
   return (
     <>
       <ErrorAlert error={error} />
-      <h2>Seat Reservation</h2>
-      <h3>
-        for {reservation.first_name} {reservation.last_name} party of{" "}
-        {reservation.people}
-      </h3>
+      <h1 className="text-center">Seating:</h1>
+      <h2 className="text-center">
+        <span className="accent1">
+          {reservation.first_name} {reservation.last_name}{" "}
+        </span>
+        <span className="font-italic medium">party of</span>{" "}
+        <span className="accent1">{reservation.people}</span>
+      </h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className="seat-form-buffer">
           <select
             name="table_id"
             className="form-control"
             required
             onChange={handleChange}
+            autoFocus
           >
             <option value="">Choose Table</option>
             {tables.map((table) => (
@@ -77,13 +81,18 @@ export default function SeatReservation() {
             ))}
           </select>
         </div>
-
-        <button type="button" className="btn btn-dark" onClick={history.goBack}>
-          Cancel
-        </button>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
+        <div>
+          <button
+            type="button"
+            className="form-btn dark-bg light"
+            onClick={history.goBack}
+          >
+            Cancel
+          </button>
+          <button type="submit" className="form-btn accent2-bg">
+            Submit
+          </button>
+        </div>
       </form>
     </>
   );
