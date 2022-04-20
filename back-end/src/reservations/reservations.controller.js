@@ -35,8 +35,8 @@ function hasOnlyValidProperties(req, res, nxt) {
   if (!data) {
     return nxt({
       status: 400,
-      message: 'data required!'
-    })
+      message: "data required!",
+    });
   }
 
   const invalidFields = Object.keys(data).filter(
@@ -61,21 +61,24 @@ function timeIsValid(req) {
   const { reservation_time } = req.body.data;
   const timeFormat = /\d\d:\d\d/;
 
+  const errors = [];
   // is reservation_time provided?
   if (!reservation_time) {
-    return "A time is required for a reservation.";
+    errors.push("A time is required for a reservation.");
   }
 
   // is the reservation_time is in the correct format?
   if (!reservation_time.match(timeFormat)) {
-    return `reservation_time must be a valid time.`;
+    errors.push(`reservation_time must be a valid time.`);
   }
 
   // is the reservation_time between 10:30AM and 9:30PM?
   // -hours of operation
   if (reservation_time < "10:30" || reservation_time > "21:20") {
-    return "Reservation must be between 10:30AM and 9:30PM.";
+    errors.push("Reservation must be between 10:30AM and 9:30PM.");
   }
+
+  if (errors.length) return errors;
   return false;
 }
 
@@ -102,20 +105,25 @@ function dateIsValid(req) {
   const resDate = new Date(`${reservation_date} ${reservation_time}`);
   const dateRegEx = /^\d{4}\-\d{1,2}\-\d{1,2}$/;
 
+  const errors = [];
+
   // is the reservation_date in the correct format?
   if (!reservation_date.match(dateRegEx)) {
-    return `reservation_date must be a valid date.`;
+    errors.push(`reservation_date must be a valid date.`);
   }
 
   // is the reservation_date of the past?
   if (resDate < today) {
-    return "Reservation must be made for a future date.";
+    console.log("resDate:", resDate);
+    console.log("today:", today);
+    errors.push("Reservation must be made for a future date.");
   }
 
   // is the reservation_date on a valid business day?
   if (resDate.getDay() === 2) {
-    return `Sorry! We're closed on Tuesdays.`;
+    errors.push(`Sorry! We're closed on Tuesdays.`);
   }
+  if (errors.length) return errors;
   return false;
 }
 
@@ -225,11 +233,11 @@ async function reservationExists(req, res, nxt) {
  * @returns An array of errors
  */
 function createValidation(req, res, nxt) {
-  const errors = [];
+  let errors = [];
 
-  // creates an array of errors 
-  if (timeIsValid(req)) errors.push(timeIsValid(req));
-  if (dateIsValid(req)) errors.push(dateIsValid(req));
+  // creates an array of errors
+  if (timeIsValid(req)) errors = [...errors, ...timeIsValid(req)];
+  if (dateIsValid(req)) errors = [...errors, ...dateIsValid(req)];
   if (peopleIsValid(req)) errors.push(peopleIsValid(req));
   if (statusBooked(req)) errors.push(statusBooked(req));
   if (errors.length > 0) {
@@ -257,11 +265,11 @@ function createValidation(req, res, nxt) {
  * @returns An array of errors
  */
 function updateValidation(req, res, nxt) {
-  const errors = [];
-  
-  // creates an array of errors 
-  if (timeIsValid(req)) errors.push(timeIsValid(req));
-  if (dateIsValid(req)) errors.push(dateIsValid(req));
+  let errors = [];
+
+  // creates an array of errors
+  if (timeIsValid(req)) errors = [...errors, ...timeIsValid(req)];
+  if (dateIsValid(req)) errors = [...errors, ...dateIsValid(req)];
   if (peopleIsValid(req)) errors.push(peopleIsValid(req));
   if (errors.length > 0) {
     if (errors.length === 1) {
