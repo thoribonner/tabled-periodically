@@ -27,7 +27,6 @@ export default function SearchReservations() {
     } catch (err) {
       setError(err);
     }
-    return () => ac.abort();
   };
 
   return (
