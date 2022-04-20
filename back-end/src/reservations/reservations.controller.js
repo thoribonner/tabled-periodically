@@ -61,24 +61,17 @@ function timeIsValid(req) {
   const { reservation_time } = req.body.data;
   const timeFormat = /\d\d:\d\d/;
 
-  const errors = [];
-  // is reservation_time provided?
-  if (!reservation_time) {
-    errors.push("A time is required for a reservation.");
-  }
-
-  // is the reservation_time is in the correct format?
+  // is the reservation_time in the correct format?
   if (!reservation_time.match(timeFormat)) {
-    errors.push(`reservation_time must be a valid time.`);
+    return `reservation_time must be a valid time.`;
   }
 
   // is the reservation_time between 10:30AM and 9:30PM?
   // -hours of operation
   if (reservation_time < "10:30" || reservation_time > "21:20") {
-    errors.push("Reservation must be between 10:30AM and 9:30PM.");
+    return "Reservation must be between 10:30AM and 9:30PM.";
   }
 
-  if (errors.length) return errors;
   return false;
 }
 
@@ -100,7 +93,6 @@ function timeIsValid(req) {
  */
 function dateIsValid(req) {
   const { reservation_date, reservation_time } = req.body.data;
-  console.log(reservation_time)
 
   const today = new Date();
   const resDate = new Date(`${reservation_date} ${reservation_time} GMT-04:00`);
@@ -115,10 +107,6 @@ function dateIsValid(req) {
 
   // is the reservation_date of the past?
   if (resDate < today) {
-    console.log("resDate:", resDate);
-    console.log("today:", today);
-    console.log("resDate tz:", resDate.getTimezoneOffset());
-    console.log("today tz:", today.getTimezoneOffset());
     errors.push("Reservation must be made for a future date.");
   }
 
@@ -239,7 +227,7 @@ function createValidation(req, res, nxt) {
   let errors = [];
 
   // creates an array of errors
-  if (timeIsValid(req)) errors = [...errors, ...timeIsValid(req)];
+  if (timeIsValid(req)) errors.push(timeIsValid(req));
   if (dateIsValid(req)) errors = [...errors, ...dateIsValid(req)];
   if (peopleIsValid(req)) errors.push(peopleIsValid(req));
   if (statusBooked(req)) errors.push(statusBooked(req));
@@ -271,7 +259,7 @@ function updateValidation(req, res, nxt) {
   let errors = [];
 
   // creates an array of errors
-  if (timeIsValid(req)) errors = [...errors, ...timeIsValid(req)];
+  if (timeIsValid(req)) errors.push(timeIsValid(req));
   if (dateIsValid(req)) errors = [...errors, ...dateIsValid(req)];
   if (peopleIsValid(req)) errors.push(peopleIsValid(req));
   if (errors.length > 0) {
