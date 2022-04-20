@@ -10,14 +10,14 @@
 An in-house restaurant table/reservation system
 - Allows internal staff to:
   - reservations:
-    - create
-    - edit
-    - cancel
-    - seat
-    - and search by phone number
+    - schedule new reservation
+    - edit reservation
+    - cancel reservation
+    - seat reservation at a table
+    - and search reservations by phone number
   - tables:
-    - create
-    - seat
+    - create new table
+    - seat with reservation
     - and finish seated reservations
 - Designed with a mobile first approach
 - Works for any screen size
