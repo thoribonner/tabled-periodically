@@ -1,4 +1,4 @@
-# Tabled Periodically
+# Periodic Tables
 <br>
 
 [_view live app here_](https://tp-fe.herokuapp.com)
