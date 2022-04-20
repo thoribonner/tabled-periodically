@@ -111,6 +111,7 @@ __mobile dashboard__
 ## Installation instructions
 <hr>
 
+_server is setup to run on PORT 5001_
 1. Fork / clone / download this repository.
 2. Run `cp ./back-end/.env.sample ./back-end/.env`.
 3. Update the `./back-end/.env` file with the connection URL's to your ElephantSQL database instance.
