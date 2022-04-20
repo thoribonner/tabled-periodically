@@ -100,9 +100,10 @@ function timeIsValid(req) {
  */
 function dateIsValid(req) {
   const { reservation_date, reservation_time } = req.body.data;
+  console.log(reservation_time)
 
   const today = new Date();
-  const resDate = new Date(`${reservation_date} ${reservation_time}`);
+  const resDate = new Date(`${reservation_date} ${reservation_time} GMT-04:00`);
   const dateRegEx = /^\d{4}\-\d{1,2}\-\d{1,2}$/;
 
   const errors = [];
@@ -116,6 +117,8 @@ function dateIsValid(req) {
   if (resDate < today) {
     console.log("resDate:", resDate);
     console.log("today:", today);
+    console.log("resDate tz:", resDate.getTimezoneOffset());
+    console.log("today tz:", today.getTimezoneOffset());
     errors.push("Reservation must be made for a future date.");
   }
 
