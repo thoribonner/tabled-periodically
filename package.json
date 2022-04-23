@@ -1,5 +1,6 @@
 {
   "name": "starter-restaurant-reservation",
+  "homepage": "https://tp-fe.herokuapp.com",
   "version": "1.0.0",
   "description": "Starter project restaurant reservation system",
   "private": true,
