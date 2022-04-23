@@ -2,11 +2,17 @@
 <br>
 
 [_view live app here_](https://tp-fe.herokuapp.com)
+## Table of Contents
+* [Description](#description)
+* [API documentation](#api-documentation)
+* [Tech Stack](#tech-stack)
+* [Screenshots](#screenshots)
+* [Installation](#installation-instructions)
 
 
 <br>
 
-
+## Description
 An in-house restaurant table/reservation system
 - Allows internal staff to:
   - reservations:
